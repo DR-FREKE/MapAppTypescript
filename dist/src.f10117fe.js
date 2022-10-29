@@ -22872,6 +22872,9 @@ var Company = /** @class */function () {
       lng: parseFloat(faker_1.faker.address.longitude())
     };
   }
+  Company.prototype.getLocation = function () {
+    return this.location;
+  };
   return Company;
 }();
 exports.Company = Company;
@@ -22892,10 +22895,60 @@ var User = /** @class */function () {
       lng: parseFloat(faker_1.faker.address.longitude())
     };
   }
+  User.prototype.getLocation = function () {
+    return this.location;
+  };
   return User;
 }();
 exports.User = User;
-},{"@faker-js/faker":"node_modules/@faker-js/faker/dist/esm/index.mjs"}],"src/index.ts":[function(require,module,exports) {
+},{"@faker-js/faker":"node_modules/@faker-js/faker/dist/esm/index.mjs"}],"src/Map.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.CustomMap = void 0;
+var CustomMap = /** @class */function () {
+  function CustomMap(mapDiv, opt) {
+    this.googleMap = new google.maps.Map(mapDiv, opt);
+  }
+  // better code
+  CustomMap.prototype.addMarker = function (loc) {
+    new google.maps.Marker({
+      map: this.googleMap,
+      position: loc.getLocation()
+    });
+  };
+  // semi good but still bad code style
+  CustomMap.prototype.addMarkerTwo = function (pos) {
+    new google.maps.Marker({
+      map: this.googleMap,
+      position: pos.location
+    });
+  };
+  //bad code
+  CustomMap.prototype.addUserMarker = function (user) {
+    new google.maps.Marker({
+      map: this.googleMap,
+      position: user.location
+    });
+  };
+  // bad code
+  CustomMap.prototype.addCompanyMarker = function (company) {
+    new google.maps.Marker({
+      map: this.googleMap,
+      position: company.location
+    });
+  };
+  return CustomMap;
+}();
+exports.CustomMap = CustomMap;
+/**
+ *
+ * one thing we know for sure here is that this is a bad way to write code...there are a lot of duplicate code in the addUserMarker and
+ * addCompanyMarker.
+ */
+},{}],"src/index.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22903,10 +22956,20 @@ Object.defineProperty(exports, "__esModule", {
 });
 var Company_1 = require("./Company");
 var User_1 = require("./User");
+var Map_1 = require("./Map");
 var user = new User_1.User();
 console.log(user);
 var company = new Company_1.Company();
 console.log(company);
+var mapDiv = document.getElementById("map");
+var map = new Map_1.CustomMap(mapDiv, {
+  zoom: 1,
+  center: user.location
+});
+// map.addUserMarker(user);
+// map.addCompanyMarker(company);
+map.addMarker(user);
+map.addMarker(company);
 /**
  *
  * parcel is a transpiler/bundler that transpiles typescript code into
@@ -22919,7 +22982,7 @@ console.log(company);
  * to make the browser understand it, we'll need to use parcel and passing the html
  * file to parcel. parcel will then convert the ts file to js file
  */
-},{"./Company":"src/Company.ts","./User":"src/User.ts"}],"../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./Company":"src/Company.ts","./User":"src/User.ts","./Map":"src/Map.ts"}],"../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -22944,7 +23007,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62707" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59468" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

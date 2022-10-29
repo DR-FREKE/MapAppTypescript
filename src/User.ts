@@ -1,7 +1,8 @@
 import { LocationType } from "../types";
 import { faker } from "@faker-js/faker";
+import { Mappable } from "./MapInterface";
 
-export class User {
+export class User implements Mappable {
   name: string;
   location: LocationType;
 
@@ -12,5 +13,9 @@ export class User {
       lat: parseFloat(faker.address.latitude()),
       lng: parseFloat(faker.address.longitude()),
     };
+  }
+
+  getLocation(): LocationType {
+    return this.location;
   }
 }

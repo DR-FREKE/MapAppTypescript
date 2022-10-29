@@ -1,11 +1,20 @@
 import { Company } from "./Company";
 import { User } from "./User";
+import { CustomMap } from "./Map";
 
 const user = new User();
 console.log(user);
 
 const company = new Company();
 console.log(company);
+
+const mapDiv = document.getElementById("map");
+
+const map = new CustomMap(mapDiv, { zoom: 1, center: user.location });
+// map.addUserMarker(user);
+// map.addCompanyMarker(company);
+map.addMarker(user);
+map.addMarker(company);
 /**
  *
  * parcel is a transpiler/bundler that transpiles typescript code into

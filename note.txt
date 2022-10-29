@@ -1,0 +1,11 @@
+The goal of a type definition file is to help typescript understand how a third party javascript library works.
+So there are some library that was written in javascript; actually alot and when we try to use this 
+library, typescript does not actually understand how it works hence we'd need to install the type definition of that library.
+Some library when install by default comes with their type definition and for those that don't, we'll need to search for their 
+type definition and install them.
+
+Also when writing html and typescript, when we have a global variable that holds the library we want to use 
+for example, the javascript map api from google map; we use this library by putting the link/url in the script tag in our html file.
+When we try to use an object from the library on the browser, it actually works fine compared to when we try to use it in our typescript
+file then we seee an error telling us it doesn't understand. and that's because we'll need to add the type definition of the google javascript
+map api to our package.json file by installing the type definition.
