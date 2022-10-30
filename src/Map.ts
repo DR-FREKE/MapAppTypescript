@@ -12,13 +12,20 @@ export class CustomMap {
 
   // better code
   addMarker(loc: Mappable): void {
-    new google.maps.Marker({
+    const marker = new google.maps.Marker({
       map: this.googleMap,
       position: loc.getLocation(),
     });
+
+    marker.addListener("click", () => {
+      const info = new google.maps.InfoWindow({ content: loc.getContent() });
+      info.open(this.googleMap, marker);
+    });
   }
 
-  // semi good but still bad code style
+  // semi good but still bad code style. The problem with this style is that there is now a dependency between the CustomMap class and the
+  // different other classes representing something that we might want to put on the map in our application. With the style above, you can
+  // now have something called dependency injection and dependency inversion.
   addMarkerTwo(pos: User | Company): void {
     new google.maps.Marker({ map: this.googleMap, position: pos.location });
   }

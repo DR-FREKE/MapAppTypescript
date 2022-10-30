@@ -20,4 +20,8 @@ export class Company implements Mappable {
   getLocation(): LocationType {
     return this.location;
   }
+
+  getContent(): string {
+    return `<div><h1>Company name: ${this.name}</h1><h3>catchPhrase: ${this.catchPhrase}</h3></div>`;
+  }
 }

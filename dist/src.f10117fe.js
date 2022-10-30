@@ -22875,6 +22875,9 @@ var Company = /** @class */function () {
   Company.prototype.getLocation = function () {
     return this.location;
   };
+  Company.prototype.getContent = function () {
+    return "<div><h1>Company name: ".concat(this.name, "</h1><h3>catchPhrase: ").concat(this.catchPhrase, "</h3></div>");
+  };
   return Company;
 }();
 exports.Company = Company;
@@ -22898,6 +22901,9 @@ var User = /** @class */function () {
   User.prototype.getLocation = function () {
     return this.location;
   };
+  User.prototype.getContent = function () {
+    return "<div><h1>User name: ".concat(this.name, "</h1></div>");
+  };
   return User;
 }();
 exports.User = User;
@@ -22914,12 +22920,21 @@ var CustomMap = /** @class */function () {
   }
   // better code
   CustomMap.prototype.addMarker = function (loc) {
-    new google.maps.Marker({
+    var _this = this;
+    var marker = new google.maps.Marker({
       map: this.googleMap,
       position: loc.getLocation()
     });
+    marker.addListener("click", function () {
+      var info = new google.maps.InfoWindow({
+        content: loc.getContent()
+      });
+      info.open(_this.googleMap, marker);
+    });
   };
-  // semi good but still bad code style
+  // semi good but still bad code style. The problem with this style is that there is now a dependency between the CustomMap class and the
+  // different other classes representing something that we might want to put on the map in our application. With the style above, you can
+  // now have something called dependency injection and dependency inversion.
   CustomMap.prototype.addMarkerTwo = function (pos) {
     new google.maps.Marker({
       map: this.googleMap,

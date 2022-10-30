@@ -18,4 +18,8 @@ export class User implements Mappable {
   getLocation(): LocationType {
     return this.location;
   }
+
+  getContent(): string {
+    return `<div><h1>User name: ${this.name}</h1></div>`;
+  }
 }
