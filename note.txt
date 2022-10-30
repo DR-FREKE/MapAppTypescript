@@ -9,3 +9,7 @@ for example, the javascript map api from google map; we use this library by putt
 When we try to use an object from the library on the browser, it actually works fine compared to when we try to use it in our typescript
 file then we seee an error telling us it doesn't understand. and that's because we'll need to add the type definition of the google javascript
 map api to our package.json file by installing the type definition.
+
+NOTE: It is not compulsory for our classes to implement the interface; it will work fine as long as the classes satifies the properties or method 
+that the interface requires. It helps us put error in the right places and I kinda feel it much professional to write code this way i.e the classes
+implementing the interface which actually forces us to have the properties and methods in our dependent classes [User class and Company class]

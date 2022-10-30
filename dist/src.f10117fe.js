@@ -22934,14 +22934,15 @@ var CustomMap = /** @class */function () {
   };
   // semi good but still bad code style. The problem with this style is that there is now a dependency between the CustomMap class and the
   // different other classes representing something that we might want to put on the map in our application. With the style above, you can
-  // now have something called dependency injection and dependency inversion.
+  // now have something called dependency injection and dependency inversion. Actually we're also using dependency injection here too but the style
+  // above adds dependency inversion which works better.
   CustomMap.prototype.addMarkerTwo = function (pos) {
     new google.maps.Marker({
       map: this.googleMap,
       position: pos.location
     });
   };
-  //bad code
+  //bad code. too specific on the type of composition
   CustomMap.prototype.addUserMarker = function (user) {
     new google.maps.Marker({
       map: this.googleMap,
